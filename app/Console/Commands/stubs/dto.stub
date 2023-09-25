@@ -1,0 +1,12 @@
+<?php
+
+namespace App\Dtos;
+
+use Illuminate\Contracts\Support\Arrayable;
+
+Class {{class}} implements Arrayable
+{
+// 
+}
+
+?>
