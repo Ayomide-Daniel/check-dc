@@ -61,7 +61,7 @@ cp .env.testing.example .env.testing
 ./vendor/bin/sail artisan test
 ```
 
-![Passed Tests](<Screenshot 2023-09-26 at 21.20.18.png>)
+![Passed Tests](<./resources/images/test.png>)
 
 ## Documentation and Development
 
