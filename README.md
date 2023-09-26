@@ -54,9 +54,14 @@ To run the tests, execute the following command in the root directory of the pro
 # Copy the .env.testing file from the .env.testing.example file
 cp .env.testing.example .env.testing
 
+# Clear the cache
+./vendor/bin/sail artisan config:clear --env=testing
+
 # Run the tests
 ./vendor/bin/sail artisan test
 ```
+
+![Passed Tests](<Screenshot 2023-09-26 at 21.20.18.png>)
 
 ## Documentation and Development
 

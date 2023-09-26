@@ -7,9 +7,11 @@ use ErrorException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\UnauthorizedException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use InvalidArgumentException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use TypeError;
 
 class Handler extends ExceptionHandler
 {
@@ -86,5 +88,12 @@ class Handler extends ExceptionHandler
             ], 422);
         });
 
+        // TypeError
+        $this->renderable(function (TypeError $e, $request) {
+            return response()->json([
+                "status" => false,
+                "message" => 'Invalid data type'
+            ], 422);
+        });
     }
 }
