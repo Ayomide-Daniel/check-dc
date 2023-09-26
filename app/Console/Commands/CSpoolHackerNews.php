@@ -7,9 +7,8 @@ use Illuminate\Console\Command;
 
 class CSpoolHackerNews extends Command
 {
-    public function __construct(
-        private StoryService $storyService,
-    ) {
+    public function __construct()
+    {
         parent::__construct();
     }
 
@@ -25,13 +24,14 @@ class CSpoolHackerNews extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Spools the top 500 stories from Hacker News';
 
     /**
      * Execute the console command.
      */
-    public function handle()
-    {
-        $this->storyService->spoolHackerNews();
+    public function handle(
+        StoryService $storyService,
+    ) {
+        $storyService->spoolHackerNews();
     }
 }

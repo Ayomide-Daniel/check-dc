@@ -18,7 +18,6 @@ class HackerNewsService implements IHackerNewsService
     function getTopStories(): array {
         $response = $this->client::get('https://hacker-news.firebaseio.com/v0/topstories.json');
         return $response->json();
-        // return $topStories;
     }
 
     /**

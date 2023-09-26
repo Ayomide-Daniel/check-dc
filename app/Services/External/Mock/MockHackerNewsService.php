@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\External\Mock;
+
 use App\Interfaces\IHackerNewsService;
 use Faker\Factory as Faker;
 
 
-class MockHackerNewsApi implements IHackerNewsService
+class MockHackerNewsService implements IHackerNewsService
 {
     function getTopStories(): array {
         return [

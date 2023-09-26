@@ -7,6 +7,7 @@ use App\Dtos\QueryStoryDto;
 use App\Interfaces\IHackerNewsService;
 use App\Jobs\CreateCommentJob;
 use App\Models\Comment;
+use Illuminate\Database\Eloquent\Collection;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CommentsService
@@ -72,5 +73,13 @@ class CommentsService
             }
         }
         return $comment;
+    }
+
+    /**
+     * @return Collection<Comment>
+     */
+    function findAll(): Collection
+    {
+        return $this->commentRepo->all();
     }
 }

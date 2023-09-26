@@ -13,7 +13,7 @@ class HackerNewsServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(IHackerNewsService::class, HackerNewsService::class);
     }
 
     /**
@@ -21,6 +21,6 @@ class HackerNewsServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->app->bind(IHackerNewsService::class, HackerNewsService::class);
+        //
     }
 }

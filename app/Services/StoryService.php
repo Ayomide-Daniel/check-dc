@@ -91,4 +91,12 @@ class StoryService
     {
         return $this->storyRepo->where($query->toArray())->get();
     }
+
+    /**
+     * @return Collection<Story>
+     */
+    function findAll(): Collection
+    {
+        return $this->storyRepo->all();
+    }
 }

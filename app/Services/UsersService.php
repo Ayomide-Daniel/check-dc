@@ -42,6 +42,14 @@ class UsersService
     /**
      * @return Collection<User>
      */
+    function findAll(): Collection
+    {
+        return $this->userRepo->all();
+    }
+
+    /**
+     * @return Collection<User>
+     */
     function findBy(QueryUserDto $query): Collection
     {
         return $this->userRepo->where($query->toArray())->get();

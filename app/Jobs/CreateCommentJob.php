@@ -20,7 +20,7 @@ class CreateCommentJob implements ShouldQueue
     public function __construct(
         private int $storyId,
         private int $hackerNewsCommentId,
-        private ?int $parentId,
+        private ?int $parentId = null,
     ) {
     }
 
