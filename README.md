@@ -54,6 +54,9 @@ To run the tests, execute the following command in the root directory of the pro
 # Copy the .env.testing file from the .env.testing.example file
 cp .env.testing.example .env.testing
 
+# Create a database for testing
+touch database/check_dc.sqlite
+
 # Clear the cache
 ./vendor/bin/sail artisan config:clear --env=testing
 
@@ -95,3 +98,12 @@ Run the following command in the root directory of the project to generate the f
 ```
 
 ## Notes
+
+Whenever in doubt, run the command in the root directory of the project:
+
+```bash
+# Clear the route cache
+# Clear the configuration cache
+# Clear the application cache
+./vendor/bin/sail artisan optimize:clear
+```
