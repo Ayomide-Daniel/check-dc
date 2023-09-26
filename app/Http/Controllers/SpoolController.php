@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Services\StoryService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class SpoolController extends Controller
 {

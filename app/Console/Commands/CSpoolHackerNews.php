@@ -32,6 +32,8 @@ class CSpoolHackerNews extends Command
     public function handle(
         StoryService $storyService,
     ) {
-        $storyService->spoolHackerNews();
+        $response = $storyService->spoolHackerNews();
+
+        $this->info($response);
     }
 }
