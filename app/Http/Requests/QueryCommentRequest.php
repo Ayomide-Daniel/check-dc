@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class QueryUserRequest extends FormRequest
+class QueryCommentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,10 @@ class QueryUserRequest extends FormRequest
     {
         return [
             'id' => ['integer', 'nullable'],
-            'hacker_news_id' => ['string', 'nullable'],
+            'user_id' => ['integer', 'nullable'],
+            'hacker_news_id' => ['integer', 'nullable'],
+            'story_id' => ['integer', 'nullable'],
+            'parent_id' => ['integer', 'nullable'],
         ];
     }
 }

@@ -60,6 +60,18 @@ class UsersService
         return $this->userRepo->where($query->toArray())->first();
     }
 
+    function findOneByOrFail(QueryUserDto $query): User
+    {
+        $user = $this->userRepo->where($query->toArray())->with(['stories'])->first();
+
+        if (!$user) {
+            throw new NotFoundHttpException('User not found');
+        }
+
+        return $user;
+    }
+
+
     function findByHackerNewsIdOrCreate(string $by): User
     {
         $user = $this->userRepo->where('hacker_news_id', $by)->first();

@@ -20,12 +20,21 @@ class StoryController extends Controller
         $stories = $this->storyService->findBy(new QueryStoryDto(
             $validatedRequest['id'] ?? null,
             $validatedRequest['user_id'] ?? null,
-            null,
             $validatedRequest['hacker_news_id'] ?? null,
         ));
 
         return response()->json([
             'data' => $stories,
+        ]);
+    }
+
+    function show(int $id): JsonResponse {
+        $story = $this->storyService->findOneByOrFail(new QueryStoryDto(
+            $id,
+        ));
+
+        return response()->json([
+            'data' => $story,
         ]);
     }
 }

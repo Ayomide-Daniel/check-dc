@@ -73,9 +73,15 @@ class StoryService
         return $story;
     }
 
-    function findOneBy(QueryStoryDto $query): Story
+
+    function findOneBy(QueryStoryDto $query): ?Story
     {
-        $story = $this->storyRepo->where($query->toArray())->first();
+        return $this->storyRepo->where($query->toArray())->first();
+    }
+
+    function findOneByOrFail(QueryStoryDto $query): Story
+    {
+        $story = $this->storyRepo->where($query->toArray())->with(['user', 'comments'])->first();
 
         if (!$story) {
             throw new NotFoundHttpException('Story not found');
@@ -87,16 +93,16 @@ class StoryService
     /**
      * @return Collection<Story>
      */
-    function findBy(QueryStoryDto $query): Collection
+    function findAll(): Collection
     {
-        return $this->storyRepo->where($query->toArray())->get();
+        return $this->storyRepo->all();
     }
 
     /**
      * @return Collection<Story>
      */
-    function findAll(): Collection
+    function findBy(QueryStoryDto $query): Collection
     {
-        return $this->storyRepo->all();
+        return $this->storyRepo->where($query->toArray())->get();
     }
 }

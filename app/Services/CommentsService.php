@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Dtos\CreateCommentDto;
+use App\Dtos\QueryCommentDto;
 use App\Dtos\QueryStoryDto;
 use App\Interfaces\IHackerNewsService;
 use App\Jobs\CreateCommentJob;
@@ -81,5 +82,24 @@ class CommentsService
     function findAll(): Collection
     {
         return $this->commentRepo->all();
+    }
+
+    /**
+     * @return Collection<Comment>
+     */
+    function findBy(QueryCommentDto $query): Collection
+    {
+        return $this->commentRepo->where($query->toArray())->get();
+    }
+
+    function findOneByOrFail(QueryCommentDto $query): Comment
+    {
+        $comment = $this->commentRepo->where($query->toArray())->with(['user', 'story'])->first();
+
+        if (!$comment) {
+            throw new NotFoundHttpException('Comment not found');
+        }
+
+        return $comment;
     }
 }

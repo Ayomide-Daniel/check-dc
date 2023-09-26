@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Dtos\QueryUserDto;
 use App\Http\Requests\QueryUserRequest;
 use App\Services\UsersService;
-use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
@@ -24,6 +23,16 @@ class UsersController extends Controller
 
         return response()->json([
             'data' => $users,
+        ]);
+    }
+
+    function show(int $id) {
+        $user = $this->usersService->findOneByOrFail(new QueryUserDto(
+            $id,
+        ));
+
+        return response()->json([
+            'data' => $user,
         ]);
     }
 }

@@ -4,25 +4,23 @@ namespace App\Dtos;
 
 use Illuminate\Contracts\Support\Arrayable;
 
-Class QueryStoryDto implements Arrayable
+Class QueryCommentDto implements Arrayable
 {
     public function __construct(
         public ?int $id = null,
         public ?int $user_id = null,
         public ?int $hacker_news_id = null,
-        public ?int $descendants = null,
+        public ?int $story_id = null,
+        public ?int $parent_id = null,
         public ?string $kids = null,
-        public ?string $score = null,
-        public ?string $time = null,
-        public ?string $title = null,
-        public ?string $url = null,
-        public ?string $category = null,
+        public ?string $text = null,
+        public ?int $time = null,
     ) {
     }
 
-    public function toArray(): array
+    function toArray(): array
     {
-        $response= [];
+        $response = [];
 
         if ($this->id) {
             $response['id'] = $this->id;
@@ -36,35 +34,28 @@ Class QueryStoryDto implements Arrayable
             $response['hacker_news_id'] = $this->hacker_news_id;
         }
 
-        if ($this->descendants) {
-            $response['descendants'] = $this->descendants;
+        if ($this->story_id) {
+            $response['story_id'] = $this->story_id;
+        }
+
+        if ($this->parent_id) {
+            $response['parent_id'] = $this->parent_id;
         }
 
         if ($this->kids) {
             $response['kids'] = $this->kids;
         }
 
-        if ($this->score) {
-            $response['score'] = $this->score;
+        if ($this->text) {
+            $response['text'] = $this->text;
         }
 
         if ($this->time) {
             $response['time'] = $this->time;
         }
 
-        if ($this->title) {
-            $response['title'] = $this->title;
-        }
-
-        if ($this->url) {
-            $response['url'] = $this->url;
-        }
-
-        if ($this->category) {
-            $response['category'] = $this->category;
-        }
-
         return $response;
+
     }
 }
 
