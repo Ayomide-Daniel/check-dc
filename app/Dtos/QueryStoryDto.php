@@ -10,7 +10,7 @@ Class QueryStoryDto implements Arrayable
         public ?int $id = null,
         public ?int $user_id = null,
         public ?int $descendants = null,
-        public ?string $hacker_news_id = null,
+        public ?int $hacker_news_id = null,
         public ?string $kids = null,
         public ?string $score = null,
         public ?string $time = null,

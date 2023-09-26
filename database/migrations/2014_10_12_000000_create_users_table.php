@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('hacker_news_id')->unique();
             $table->bigInteger('created');
             $table->bigInteger('karma');
-            $table->string('about');
+            $table->text('about');
             $table->string('submitted');
             $table->timestamps();
         });

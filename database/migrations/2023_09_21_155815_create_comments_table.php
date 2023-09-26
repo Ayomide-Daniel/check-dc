@@ -13,14 +13,13 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId(
-                'user_id'
-            )->constrained('users', 'id');
+            $table->foreignId('user_id')->constrained('users', 'id');
             $table->integer('hacker_news_id')->unique();
             $table->json('kids');
             $table->foreignId('story_id')->constrained('stories', 'id');
             $table->text('text');
             $table->bigInteger('time');
+            $table->bigInteger('parent_id')->nullable();
             $table->timestamps();
         });
     }

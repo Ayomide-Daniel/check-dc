@@ -7,6 +7,7 @@ use Illuminate\Contracts\Support\Arrayable;
 Class QueryUserDto implements Arrayable
 {
     public function __construct(
+        public ?int $id = null,
         public ?string $hackerNewsId = null,
         public ?int $created = null,
         public ?int $karma = null,
@@ -18,6 +19,10 @@ Class QueryUserDto implements Arrayable
     public function toArray(): array
     {
         $response= [];
+
+        if ($this->id) {
+            $response['id'] = $this->id;
+        }
 
         if ($this->hackerNewsId) {
             $response['hacker_news_id'] = $this->hackerNewsId;

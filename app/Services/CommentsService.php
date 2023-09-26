@@ -4,8 +4,10 @@ namespace App\Services;
 
 use App\Dtos\CreateCommentDto;
 use App\Dtos\QueryStoryDto;
+use App\Jobs\CreateCommentJob;
 use App\Models\Comment;
 use App\Services\External\HackerNewsService;
+use GuzzleHttp\Promise\Create;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CommentsService
@@ -29,11 +31,20 @@ class CommentsService
         return $this->commentRepo->create($createCommentDto->toArray());
     }
 
-    function createFromHackerNewsId(int $storyId, int $hackerNewsId): ?Comment {
+    function createFromHackerNewsId(int $storyId, int $hackerNewsId, ?int $parentId): ?Comment
+    {
         $story = $this->storyService->findOneBy(new QueryStoryDto($storyId));
 
         if (!$story) {
             throw new NotFoundHttpException('Story not found');
+        }
+
+        if ($parentId) {
+            $parentComment = $this->commentRepo->where('id', $parentId)->first();
+
+            if (!$parentComment) {
+                throw new NotFoundHttpException('Parent comment not found');
+            }
         }
 
         $hackerNewsComment = $this->hackerNewsService->getItem($hackerNewsId);
@@ -51,11 +62,16 @@ class CommentsService
             $story->id,
             $hackerNewsComment['text'],
             $hackerNewsComment['time'],
+            $parentId,
         );
 
-        return $this->create($createCommentDto);
+        $comment = $this->create($createCommentDto);
+
+        foreach (($hackerNewsComment['kids'] ?? []) as $key => $value) {
+            if ($parentId) {
+                CreateCommentJob::dispatch($story->id, $value, $comment->id);
+            }
+        }
+        return $comment;
     }
-
 }
-
-?>

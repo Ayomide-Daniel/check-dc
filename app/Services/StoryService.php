@@ -9,6 +9,8 @@ use App\Jobs\CreateCommentJob;
 use App\Jobs\CreateStoryJob;
 use App\Models\Story;
 use App\Services\External\HackerNewsService;
+use Illuminate\Database\Eloquent\Collection;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class StoryService
 {
@@ -46,7 +48,7 @@ class StoryService
     {
         $hackerNewsStory = $this->hackerNewsService->getItem($hackerNewsId);
 
-        if (isset($hackerNewsStory['deleted']) && $hackerNewsStory['deleted']) {
+        if($hackerNewsStory['type'] !== 'story' || (isset($hackerNewsStory['deleted']) && $hackerNewsStory['deleted'])) {
             return null;
         }
 
@@ -66,7 +68,7 @@ class StoryService
 
         $story = $this->create($createStoryDto);
 
-        foreach ($hackerNewsStory['kids'] as $key => $commentId) {
+        foreach (($hackerNewsStory['kids'] ?? []) as $key => $commentId) {
             CreateCommentJob::dispatch($story->id, $commentId);
         }
 
@@ -75,6 +77,20 @@ class StoryService
 
     function findOneBy(QueryStoryDto $query): Story
     {
-        return $this->storyRepo->where($query->toArray())->first();
+        $story = $this->storyRepo->where($query->toArray())->first();
+
+        if (!$story) {
+            throw new NotFoundHttpException('Story not found');
+        }
+
+        return $story;
+    }
+
+    /**
+     * @return Collection<Story>
+     */
+    function findBy(QueryStoryDto $query): Collection
+    {
+        return $this->storyRepo->where($query->toArray())->get();
     }
 }

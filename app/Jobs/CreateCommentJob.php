@@ -19,7 +19,8 @@ class CreateCommentJob implements ShouldQueue
      */
     public function __construct(
         private int $storyId,
-        private int $hackerNewsCommentId
+        private int $hackerNewsCommentId,
+        private ?int $parentId,
     ) {
     }
 
@@ -29,6 +30,6 @@ class CreateCommentJob implements ShouldQueue
     public function handle(
         CommentsService $commentsService,
     ): void {
-        $commentsService->createFromHackerNewsId($this->storyId, $this->hackerNewsCommentId);
+        $commentsService->createFromHackerNewsId($this->storyId, $this->hackerNewsCommentId, $this->parentId);
     }
 }

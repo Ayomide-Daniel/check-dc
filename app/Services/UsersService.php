@@ -6,6 +6,7 @@ use App\Dtos\CreateUserDto;
 use App\Dtos\QueryUserDto;
 use App\Models\User;
 use App\Services\External\HackerNewsService;
+use Illuminate\Database\Eloquent\Collection;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UsersService
@@ -39,9 +40,9 @@ class UsersService
     }
 
     /**
-     * @return User[]
+     * @return Collection<User>
      */
-    function findBy(QueryUserDto $query): array
+    function findBy(QueryUserDto $query): Collection
     {
         return $this->userRepo->where($query->toArray())->get();
     }
