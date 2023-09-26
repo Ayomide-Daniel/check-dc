@@ -8,17 +8,15 @@ use App\Interfaces\IHackerNewsService;
 use App\Jobs\CreateCommentJob;
 use App\Jobs\CreateStoryJob;
 use App\Models\Story;
-use App\Services\External\HackerNewsService;
 use Illuminate\Database\Eloquent\Collection;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class StoryService
 {
     public function __construct(
-        // private IHackerNewsService $hackerNewsService,
         private Story $storyRepo,
         private UsersService $usersService,
-        private HackerNewsService $hackerNewsService,
+        private IHackerNewsService $hackerNewsService,
     ) {
     }
 
@@ -46,7 +44,7 @@ class StoryService
 
     function createFromHackerNewsId(int $hackerNewsId): ?Story
     {
-        $hackerNewsStory = $this->hackerNewsService->getItem($hackerNewsId);
+        $hackerNewsStory = $this->hackerNewsService->getStory($hackerNewsId);
 
         if($hackerNewsStory['type'] !== 'story' || (isset($hackerNewsStory['deleted']) && $hackerNewsStory['deleted'])) {
             return null;

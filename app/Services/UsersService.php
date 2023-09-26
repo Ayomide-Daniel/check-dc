@@ -4,8 +4,8 @@ namespace App\Services;
 
 use App\Dtos\CreateUserDto;
 use App\Dtos\QueryUserDto;
+use App\Interfaces\IHackerNewsService;
 use App\Models\User;
-use App\Services\External\HackerNewsService;
 use Illuminate\Database\Eloquent\Collection;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -13,7 +13,7 @@ class UsersService
 {
     public function __construct(
         private User $userRepo,
-        private HackerNewsService $hackerNewsService,
+        private IHackerNewsService $hackerNewsService,
     ) {
     }
 

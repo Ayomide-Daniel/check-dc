@@ -22,6 +22,24 @@ class HackerNewsService implements IHackerNewsService
     }
 
     /**
+     * I want to be able to mock this method in my tests
+     * 
+     * @return array<mixed>
+     */
+    function getStory(int $id): array {
+        return $this->getItem($id);
+    }
+
+    /**
+     * I want to be able to mock this method in my tests
+     * 
+     * @return array<mixed>
+     */
+    function getComment(int $id): array {
+        return $this->getItem($id);
+    }
+
+    /**
      * @return array<mixed>
      */
     function getItem(int $id): array {

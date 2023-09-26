@@ -4,10 +4,9 @@ namespace App\Services;
 
 use App\Dtos\CreateCommentDto;
 use App\Dtos\QueryStoryDto;
+use App\Interfaces\IHackerNewsService;
 use App\Jobs\CreateCommentJob;
 use App\Models\Comment;
-use App\Services\External\HackerNewsService;
-use GuzzleHttp\Promise\Create;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CommentsService
@@ -15,7 +14,7 @@ class CommentsService
     public function __construct(
         private Comment $commentRepo,
         private StoryService $storyService,
-        private HackerNewsService $hackerNewsService,
+        private IHackerNewsService $hackerNewsService,
         private UsersService $usersService,
     ) {
     }
@@ -47,9 +46,9 @@ class CommentsService
             }
         }
 
-        $hackerNewsComment = $this->hackerNewsService->getItem($hackerNewsId);
+        $hackerNewsComment = $this->hackerNewsService->getComment($hackerNewsId);
 
-        if (isset($hackerNewsComment['deleted']) && $hackerNewsComment['deleted']) {
+        if ($hackerNewsComment['type'] !== 'comment' || (isset($hackerNewsComment['deleted']) && $hackerNewsComment['deleted'])) {
             return null;
         }
 
